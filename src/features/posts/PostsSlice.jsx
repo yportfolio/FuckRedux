@@ -5,16 +5,19 @@ const initialState = [
     id: '1',
     title: 'first post',
     content: 'fuck redux',
+    user: 0,
   },
   {
     id: '2',
     title: 'second post',
     content: 'fuck redux again',
+    user: 1,
   },
   {
     id: '3',
     title: 'third post',
     content: 'fuck redux again and again',
+    user: 2,
   },
 ]
 
@@ -30,7 +33,13 @@ const postsSlice = createSlice({
       },
       prepare: (title, content, userId) => {
         return {
-          payload: { id: nanoid(), title, content, user: userId },
+          payload: {
+            id: nanoid(),
+            title,
+            content,
+            user: userId,
+            date: new Date().toISOString,
+          },
         }
       },
     },

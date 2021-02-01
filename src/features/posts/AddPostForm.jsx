@@ -1,4 +1,3 @@
-import { nanoid } from '@reduxjs/toolkit'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { postAdded } from '../posts/PostsSlice'
@@ -63,6 +62,7 @@ const AddPostForm = () => {
           onChange={onContentChange}
           value={content}
         />
+
         <button type="button" onClick={onSavePostClick} disabled={!canSave}>
           save post
         </button>
