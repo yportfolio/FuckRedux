@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import PostAuthor from './PostAuthor'
 
 export const SinglePostPage = ({ match }) => {
-  console.log(match)
   //According to the route's postId, render the component
   //Step 1, go to the route, get the path
   //step 2, update the component according to the path of the route
