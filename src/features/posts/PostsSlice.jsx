@@ -60,6 +60,9 @@ const postsSlice = createSlice({
         return {
           payload: {
             id: nanoid(),
+            //action payload is divided into two section:
+            //1.default payload
+            //2.user defined payload, added by dispatch func at where the action happen.
             title,
             content,
             user: Number(userId),
