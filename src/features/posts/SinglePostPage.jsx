@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PostAuthor from './PostAuthor'
+import ReactionButtons from './ReactionButtons'
 
 export const SinglePostPage = ({ match }) => {
   //According to the route's postId, render the component
@@ -25,6 +26,7 @@ export const SinglePostPage = ({ match }) => {
           <h2>{post.title}</h2>
           <p className="post-content">{post.content}</p>
           <PostAuthor userId={post.user} />
+          <ReactionButtons post={post} />
           <Link className="button" to={`/editPost/${post.id}`}>
             edit
           </Link>

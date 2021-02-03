@@ -8,6 +8,13 @@ const initialState = [
     content: 'fuck redux',
     user: 0,
     date: sub(new Date(), { minutes: 10 }).toISOString(),
+    reactions: {
+      thumbsUp: 0,
+      hooray: 0,
+      heart: 0,
+      rocket: 0,
+      eyes: 0,
+    },
   },
   {
     id: '2',
@@ -15,6 +22,13 @@ const initialState = [
     content: 'fuck redux again',
     user: 1,
     date: sub(new Date(), { minutes: 5 }).toISOString(),
+    reactions: {
+      thumbsUp: 0,
+      hooray: 0,
+      heart: 0,
+      rocket: 0,
+      eyes: 0,
+    },
   },
   {
     id: '3',
@@ -22,6 +36,13 @@ const initialState = [
     content: 'fuck redux again and again',
     user: 2,
     date: sub(new Date(), { minutes: 1 }).toISOString(),
+    reactions: {
+      thumbsUp: 0,
+      hooray: 0,
+      heart: 0,
+      rocket: 0,
+      eyes: 0,
+    },
   },
 ]
 
@@ -43,6 +64,13 @@ const postsSlice = createSlice({
             content,
             user: Number(userId),
             date: new Date().toISOString(),
+            reactions: {
+              thumbsUp: 0,
+              hooray: 0,
+              heart: 0,
+              rocket: 0,
+              eyes: 0,
+            },
           },
         }
       },
@@ -55,8 +83,15 @@ const postsSlice = createSlice({
         existingPost.content = content
       }
     },
+    reactionAdded: (state, action) => {
+      const { postId, reaction } = action.payload
+      const existingPost = state.find((post) => post.id === postId)
+      if (existingPost) {
+        existingPost.reactions[reaction]++
+      }
+    },
   },
 })
 
 export default postsSlice.reducer
-export const { postAdded, postUpdated } = postsSlice.actions
+export const { postAdded, postUpdated, reactionAdded } = postsSlice.actions
