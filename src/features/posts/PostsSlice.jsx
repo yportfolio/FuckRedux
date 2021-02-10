@@ -69,8 +69,6 @@ const postsSlice = createSlice({
     },
     [fetchPosts.fulfilled]: (state, action) => {
       state.status = 'succeeded'
-      //Add fetched posts to the state
-      //TODO: check if the action.payload is array or obj
       state.posts = state.posts.concat(action.payload)
     },
     [fetchPosts.rejected]: (state, action) => {
