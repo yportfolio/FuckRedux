@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PostAuthor from './PostAuthor'
+import { selectPostById } from './PostsSlice'
 import ReactionButtons from './ReactionButtons'
 
 export const SinglePostPage = ({ match }) => {
@@ -9,9 +10,7 @@ export const SinglePostPage = ({ match }) => {
   //Step 1, go to the route, get the path
   //step 2, update the component according to the path of the route
   const { postId } = match.params
-  const post = useSelector((state) =>
-    state.posts.find((post) => post.id === postId)
-  )
+  const post = useSelector((state) => selectPostById(state, postId))
 
   if (!post) {
     return (
