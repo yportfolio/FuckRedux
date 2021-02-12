@@ -1,11 +1,13 @@
+import { unwrapResult } from '@reduxjs/toolkit'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { postAdded } from '../posts/PostsSlice'
+import { addNewPost } from '../posts/PostsSlice'
 
 const AddPostForm = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [userId, setUserId] = useState('')
+  const [addRequestStatus, setAddRequestStatus] = useState('idle')
 
   const users = useSelector((state) => state.users)
   const dispatch = useDispatch()
@@ -14,16 +16,30 @@ const AddPostForm = () => {
   const onContentChange = (e) => setContent(e.target.value)
   const onAuthorChanged = (e) => setUserId(e.target.value)
 
-  const onSavePostClick = () => {
-    if (title && content) {
-      dispatch(postAdded(title, content, userId))
-      setTitle('')
-      setContent('')
-      setUserId('')
+  // const canSave = Boolean(title) && Boolean(content) && Boolean(userId)
+  //Only when there is data and the status is idle, the button can be clicked
+  const canSave =
+    [title, content, userId].every(Boolean) && addRequestStatus === 'idle'
+
+  const onSavePostClick = async () => {
+    if (canSave) {
+      try {
+        setAddRequestStatus('pending')
+        const resultAction = await dispatch(
+          addNewPost({ title, content, user: userId })
+        )
+        unwrapResult(resultAction)
+        setTitle('')
+        setContent('')
+        setUserId('')
+      } catch (error) {
+        console.log('fail to save the post', error)
+      } finally {
+        setAddRequestStatus('idle')
+      }
     }
   }
 
-  const canSave = Boolean(title) && Boolean(content) && Boolean(title)
   const userOptions = users.map((user) => (
     <option value={user.id} key={user.id}>
       {user.name}
